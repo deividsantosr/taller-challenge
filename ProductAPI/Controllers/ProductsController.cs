@@ -19,12 +19,16 @@ namespace ProductAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() => Ok(_repository.GetAll());
+        public IActionResult GetAll()
+        {
+            return Ok(_repository.GetAll());
+        }
 
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
             var product = _repository.GetById(id);
+
             return product == null ? NotFound() : Ok(product);
         }
 
@@ -35,7 +39,7 @@ namespace ProductAPI.Controllers
                 product.Id = Guid.NewGuid();
 
             _repository.Add(product);
-            _repository.SaveChanges();
+
             return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
         }
 
@@ -50,7 +54,7 @@ namespace ProductAPI.Controllers
             product.Price = updated.Price;
 
             _repository.Update(product);
-            _repository.SaveChanges();
+
             return NoContent();
         }
 
@@ -61,7 +65,7 @@ namespace ProductAPI.Controllers
             if (product == null) return NotFound();
 
             _repository.Delete(product);
-            _repository.SaveChanges();
+
             return NoContent();
         }
     }

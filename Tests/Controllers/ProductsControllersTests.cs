@@ -79,7 +79,6 @@ namespace Tests.Controllers
             var product = new Product { Id = Guid.Empty, Name = "New Product", Price = 30 };
 
             _mockRepo.Setup(r => r.Add(It.IsAny<Product>()));
-            _mockRepo.Setup(r => r.SaveChanges());
 
             // Act
             var result = _controller.Create(product);
@@ -90,7 +89,6 @@ namespace Tests.Controllers
             Assert.NotEqual(Guid.Empty, createdProduct.Id);
 
             _mockRepo.Verify(r => r.Add(It.Is<Product>(p => p.Id == createdProduct.Id)), Times.Once);
-            _mockRepo.Verify(r => r.SaveChanges(), Times.Once);
         }
 
         [Fact]
@@ -103,7 +101,6 @@ namespace Tests.Controllers
 
             _mockRepo.Setup(r => r.GetById(id)).Returns(existingProduct);
             _mockRepo.Setup(r => r.Update(existingProduct));
-            _mockRepo.Setup(r => r.SaveChanges());
 
             // Act
             var result = _controller.Update(id, updatedProduct);
@@ -115,7 +112,6 @@ namespace Tests.Controllers
             Assert.Equal(20, existingProduct.Price);
 
             _mockRepo.Verify(r => r.Update(existingProduct), Times.Once);
-            _mockRepo.Verify(r => r.SaveChanges(), Times.Once);
         }
 
         [Fact]
@@ -141,7 +137,6 @@ namespace Tests.Controllers
 
             _mockRepo.Setup(r => r.GetById(id)).Returns(product);
             _mockRepo.Setup(r => r.Delete(product));
-            _mockRepo.Setup(r => r.SaveChanges());
 
             // Act
             var result = _controller.Delete(id);
@@ -150,7 +145,6 @@ namespace Tests.Controllers
             Assert.IsType<NoContentResult>(result);
 
             _mockRepo.Verify(r => r.Delete(product), Times.Once);
-            _mockRepo.Verify(r => r.SaveChanges(), Times.Once);
         }
 
         [Fact]

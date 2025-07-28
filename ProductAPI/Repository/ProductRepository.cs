@@ -12,16 +12,32 @@ namespace ProductAPI.Repository
             _context = context;
         }
 
-        public IEnumerable<Product> GetAll() => _context.Products.ToList();
+        public IEnumerable<Product> GetAll()
+        {
+            return _context.Products.ToList();
+        }
 
-        public Product? GetById(Guid id) => _context.Products.Find(id);
+        public Product? GetById(Guid id)
+        {
+            return _context.Products.Find(id);
+        }
 
-        public void Add(Product product) => _context.Products.Add(product);
+        public void Add(Product product)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+        }
 
-        public void Update(Product product) => _context.Products.Update(product);
+        public void Update(Product product)
+        {
+            _context.Products.Update(product);
+            _context.SaveChanges();
+        }
 
-        public void Delete(Product product) => _context.Products.Remove(product);
-
-        public void SaveChanges() => _context.SaveChanges();
+        public void Delete(Product product)
+        {
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
     }
 }
